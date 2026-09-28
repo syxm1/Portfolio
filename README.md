@@ -57,12 +57,14 @@ Proyek ini dibuat dengan menggunakan bantuan AI Claude dengan model Sonnet 5. St
 Prompt Log:
 - [Tugas 2](https://claude.ai/share/8e15ecd3-8402-4af8-8dd9-761accac1c1e)
 - [Tugas 3](https://claude.ai/share/2bb6a5b6-6e53-4336-946b-837d2388e11d)
+- [Tugas 4](https://claude.ai/share/2ddfc100-2000-4b43-a16b-b83cbe441090)
 
 ## Weekly Tracker
 
 - Week 1 (31 Agustus 2026 - 7 September 2026) : Membuat static page untuk section profile, skills, dan experience.
 - Week 2 (8 September 2026 - 14 September 2026) : Mengimplementasikan Django MVT.
 - Week 3 (15 September 2026 - 21 Sepetember 2026) : Mengimplementasikan Django Form untuk Create, Update, dan Delete instances pada Section Experience dan Education.
+- Week 4 (22 September 2026 - 28 September 2026) : Authentication dan Authorization.
 
 ## Pertanyaan Reflektif
 
