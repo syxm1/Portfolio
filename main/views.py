@@ -240,7 +240,7 @@ def toggle_star_education(request, education_id):
 
 @login_required(login_url="/login/")
 def toggle_star_experience(request, experience_id):
-    experience = get_object_or_404(Education, pk=experience_id)
+    experience = get_object_or_404(Experience, pk=experience_id)
 
     if request.method == "POST":
         # Kalau akun ini sudah pernah memberi star, batalkan star-nya.
