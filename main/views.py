@@ -14,6 +14,15 @@ from django.core.exceptions import PermissionDenied
 
 import datetime
 
+def is_editor_or_superuser(user):
+    return (
+        user.is_authenticated
+        and (
+            user.is_superuser
+            or user.groups.filter(name="Editor").exists()
+        )
+    )
+
 def register(request):
     form = UserCreationForm(request.POST or None)
 
@@ -78,6 +87,7 @@ def show_experience(request):
         "name": "Hisyam",
         "experience_list": experiences,
         "title_query": title_query,
+        "can_manage": is_editor_or_superuser(request.user),
     }
     
     return render(request, "experience.html", context)
@@ -97,6 +107,7 @@ def show_education(request):
         "name": "Hisyam",
         "education_list": educations,
         "institution_query": institution_query,
+        "can_manage": is_editor_or_superuser(request.user),
     }
     
     return render(request, "education.html", context)
@@ -121,7 +132,7 @@ def create_experience(request):
 
 @login_required(login_url="/login/")
 def edit_experience(request, experience_id):
-    if not request.user.is_superuser:
+    if not is_editor_or_superuser(request.user):
         raise PermissionDenied
 
     experience = get_object_or_404(Experience, pk=experience_id)
@@ -158,7 +169,7 @@ def create_education(request):
 
 @login_required(login_url="/login/")
 def edit_education(request, education_id):
-    if not request.user.is_superuser:
+    if not is_editor_or_superuser(request.user):
         raise PermissionDenied
 
     education = get_object_or_404(Education, pk=education_id)

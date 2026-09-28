@@ -36,12 +36,15 @@
 
                     {% include "components/experience_star.html" with experience=experience %}
 
-                    {% if user.is_superuser %}
                     <div class="card-actions">
-                        {% include 'components/experience_delete_modal.html' %}
-                        <a href="{% url 'main:edit_experience' experience.id %}" class="button button-secondary">Modify Experience</a>
+                        {% if user.is_superuser %}
+                            {% include 'components/experience_delete_modal.html' %}
+                        {% endif %}
+
+                        {% if can_manage %}
+                            <a href="{% url 'main:edit_experience' experience.id %}" class="button button-secondary">Modify Experience</a>
+                        {% endif %}
                     </div>
-                    {% endif %}
                 </article>
                 {% empty %}
                 <p class="empty-state">

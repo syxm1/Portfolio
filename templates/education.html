@@ -37,14 +37,18 @@
                     <p class="experience-status">Selesai</p>
                     {% endif %}
 
-                    {% include "components/education_star.html" with education=education %}
 
-                    {% if user.is_superuser %}
                     <div class="card-actions">
-                        {% include 'components/education_delete_modal.html' %}
-                        <a href="{% url 'main:edit_education' education.id %}" class="button button-secondary">Modify Education</a>
+                        {% include "components/education_star.html" with education=education %}
+
+                        {% if user.is_superuser %}
+                            {% include 'components/education_delete_modal.html' %}
+                        {% endif %}
+
+                        {% if can_manage %}
+                            <a href="{% url 'main:edit_education' education.id %}" class="button button-secondary">Modify Education</a>
+                        {% endif %}
                     </div>
-                    {% endif %}
                 </article>
                 {% empty %}
                 <p class="empty-state">
