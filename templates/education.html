@@ -12,7 +12,9 @@
                     <p class="section-kicker">Riwayat pendidikan saya</p>
                     <h1>Education</h1>
                 </div>
+                {% if user.is_superuser %}
                 <a href="{% url 'main:create_education' %}" class="button">Add New Education</a>
+                {% endif %}
             </div>
 
             <div class="experience-grid">
@@ -35,10 +37,14 @@
                     <p class="experience-status">Selesai</p>
                     {% endif %}
 
+                    {% include "components/education_star.html" with education=education %}
+
+                    {% if user.is_superuser %}
                     <div class="card-actions">
                         {% include 'components/education_delete_modal.html' %}
                         <a href="{% url 'main:edit_education' education.id %}" class="button button-secondary">Modify Education</a>
                     </div>
+                    {% endif %}
                 </article>
                 {% empty %}
                 <p class="empty-state">
