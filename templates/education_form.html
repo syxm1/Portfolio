@@ -3,9 +3,6 @@
 {% block meta %}
     <title>{% if form.instance.pk %}Edit Education{% else %}Add Education{% endif %} - {{ name }}</title>
 {% endblock meta %}
-{% block css %}
-    <link rel="stylesheet" href="{% static 'css/education_form.css' %}">
-{% endblock css %}
 {% block content %}
     <main>
         <section class="experience-section">

@@ -3,8 +3,42 @@ from django.core import serializers
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
 
+from django.contrib.auth import login, logout
+from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
+
 from main.models import Experience, Education
 from main.forms import ExperienceForm, EducationForm
+
+def register(request):
+    form = UserCreationForm(request.POST or None)
+
+    if request.method == "POST" and form.is_valid():
+        form.save()
+        messages.success(request, "Akun berhasil dibuat. Silakan login.")
+        return redirect("main:login")
+
+    context = {
+        "name": "Hisyam",
+        "form": form,
+    }
+    return render(request, "register.html", context)
+
+def login_user(request):
+    form = AuthenticationForm(request, data=request.POST or None)
+
+    if request.method == "POST" and form.is_valid():
+        login(request, form.get_user())
+        return redirect("main:show_main")
+
+    context = {
+        "name": "Hisyam",
+        "form": form,
+    }
+    return render(request, "login.html", context)
+
+def logout_user(request):
+    logout(request)
+    return redirect("main:show_main")
 
 def show_main(request):
     context = {
