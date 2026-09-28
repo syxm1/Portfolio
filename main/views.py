@@ -9,6 +9,8 @@ from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from main.models import Experience, Education
 from main.forms import ExperienceForm, EducationForm
 
+import datetime
+
 def register(request):
     form = UserCreationForm(request.POST or None)
 
@@ -27,20 +29,26 @@ def login_user(request):
     form = AuthenticationForm(request, data=request.POST or None)
 
     if request.method == "POST" and form.is_valid():
-        login(request, form.get_user())
-        return redirect("main:show_main")
+        user = form.get_user()
+        login(request, user)
+        response = redirect("main:show_main")
+        response.set_cookie('last_login', datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
+        return response
 
     context = {
-        "name": "Hisyam",
+        "name": "Burhan",
         "form": form,
     }
     return render(request, "login.html", context)
 
 def logout_user(request):
     logout(request)
-    return redirect("main:show_main")
+    response = redirect("main:show_main")
+    response.delete_cookie('last_login')
+    return response
 
 def show_main(request):
+    last_login = request.COOKIES.get('last_login', 'Belum ada sesi login / Cookie tidak ditemukan')
     context = {
         "name": "Hisyam",
         "npm": "2506614763",
@@ -48,6 +56,7 @@ def show_main(request):
         "bio": (
             "Sophomore year Computer Science Student at University of Indonesia. Currently focusing on Data Science and ML/AI Engineering."
         ),
+        "last_login": last_login
     }
     return render(request, "index.html", context)
 

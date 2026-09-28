@@ -3,6 +3,8 @@
 
 {% block title %}{{ name }} - Portofolio{% endblock title %}
 
+
+
 {% block content %}
 <main>
     <section class="hero" id="profile">
@@ -26,9 +28,12 @@
                         <dt>Program</dt>
                         <dd>{{ study_program }}</dd>
                     </div>
+                    <div class="meta-row">
+                        <dt>Sesi Terakhir Login</dt>
+                        <dd>{{ last_login }}</dd>
+                    </div>
                 </dl>
-                <div class="social-links">
-                    <a href="https://github.com/syxm1" class="social-link">GitHub</a>
+                <a href="https://github.com/syxm1" class="social-link">GitHub</a>
                     <a href="https://linkedin.com/in/hisyam-prasetyo" class="social-link">LinkedIn</a>
                     <a href="mailto:hisyamprsetyo@gmail.com" class="social-link">Email</a>
                 </div>
