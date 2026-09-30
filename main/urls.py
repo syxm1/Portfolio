@@ -19,6 +19,8 @@ urlpatterns = [
     path("api/education", get_education_json, name="get_education_json"),
     path("experience/<uuid:experience_id>/delete/",delete_experience,name="delete_experience"),
     path("education/<uuid:education_id>/delete/",delete_education,name="delete_education"),
-    path( "experience/<uuid:experience_id>/star/", toggle_star_experience, name="toggle_star_experience",),
-    path( "education/<uuid:education_id>/star/", toggle_star_education, name="toggle_star_education",)
+    path("experience/<uuid:experience_id>/star/", toggle_star_experience, name="toggle_star_experience",),
+    path("education/<uuid:education_id>/star/", toggle_star_education, name="toggle_star_education",),
+    path("experience/add-ajax/", create_experience_ajax, name="create_experience_ajax"),
+    path("education/add-ajax/", create_education_ajax, name="create_education_ajax"),
 ]

@@ -1,6 +1,13 @@
+from django.core.exceptions import ValidationError
 from django.forms import DateInput, ModelForm, TextInput, Textarea, URLInput, Select
+from django.utils.html import strip_tags
 
 from main.models import Education, Experience
+
+
+def plain_text(value):
+    """Buang tag HTML lalu rapikan spasi di awal/akhir."""
+    return strip_tags(value or "").strip()
 
 
 class ExperienceForm(ModelForm):
@@ -46,6 +53,15 @@ class ExperienceForm(ModelForm):
             "started_at": DateInput(attrs={"type": "date"}),
             "ended_at": DateInput(attrs={"type": "date"}),
         }
+
+    def clean_title(self):
+        title = plain_text(self.cleaned_data["title"])
+        if not title:
+            raise ValidationError("Title tidak boleh hanya berisi tag HTML.")
+        return title
+
+    def clean_description(self):
+        return plain_text(self.cleaned_data["description"])
 
 
 class EducationForm(ModelForm):
@@ -98,3 +114,18 @@ class EducationForm(ModelForm):
             "started_at": DateInput(attrs={"type": "date"}),
             "ended_at": DateInput(attrs={"type": "date"}),
         }
+
+    def clean_institution(self):
+        institution = plain_text(self.cleaned_data["institution"])
+        if not institution:
+            raise ValidationError("Nama institusi tidak boleh hanya berisi tag HTML.")
+        return institution
+
+    def clean_program(self):
+        program = plain_text(self.cleaned_data["program"])
+        if self.fields["program"].required and not program:
+            raise ValidationError("Program tidak boleh hanya berisi tag HTML.")
+        return program
+
+    def clean_description(self):
+        return plain_text(self.cleaned_data["description"])
